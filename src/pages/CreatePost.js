@@ -15,8 +15,6 @@ export function CreatePost() {
 
     const [imageURL, setImageURL] = useState("");
 
-    console.log(postInput);
-
     function postInputHandler(e) {
         setPostInput({...postInput, text: e.target.value})
     };

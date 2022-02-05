@@ -5,8 +5,6 @@ export function Home() {
 
     const { posts } = useSelector(state => state.posts);
 
-    console.log("from home", posts);
-
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
             <PostsList posts={posts}/>

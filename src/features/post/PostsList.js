@@ -9,8 +9,6 @@ export function PostsList({ posts }) {
 
     const { userId, token } = useSelector(state => state.user);
     const { status } = useSelector(state => state.posts);
-
-    console.log(posts);
     
     const dispatch = useDispatch();
 

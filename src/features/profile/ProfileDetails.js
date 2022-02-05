@@ -11,10 +11,7 @@ export function ProfileDetails() {
     const { profileId } = useParams();
     
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, followingUsers, error } = useSelector(state => state.profile);
-
-    console.log(followingUsers);
-    console.log("userdetails", userDetails);
+    const { userDetails, error } = useSelector(state => state.profile);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -24,12 +21,10 @@ export function ProfileDetails() {
     };
     
     let getFollowerId = userDetails.followersList?.find(user => {
-        console.log("27", user);
-        return user._id === userId;
+        return user === userId;
     });
     
     let isUserFollowing = getFollowerId === userId;
-    console.log(isUserFollowing);
 
 
     function followHandler(profileId, token) {

@@ -39,7 +39,7 @@ export function Widgets() {
         pathName !== "signup" && (
             <div className="py-2 mr-2 mt-2 hidden lg:flex">
                 <div>
-                    <h1 className="font-bold text-2xl">Users</h1>
+                    <h1 className="font-bold text-2xl">Search Users</h1>
                 <input 
                     type="text"  
                     value={searchInput}

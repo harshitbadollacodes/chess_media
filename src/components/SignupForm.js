@@ -20,7 +20,7 @@ export function SignupForm() {
     async function signUpHandler(e) {
         e.preventDefault();
         await dispatch(signUpUser({firstName, lastName, username, email, password}));
-        navigate("/home");
+        navigate("/");
     }
 
     return (

@@ -1,13 +1,36 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-container {
+  width: 1200px;
+  max-width: 95%;
+  margin: 0 auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.active {
+  @apply bg-l-blue rounded-lg 
+}
+
+.sidebarLink {
+  @apply p-3 flex items-center hover:bg-d-blue transition delay-100 rounded-lg ease-in-out hover:text-white my-1
+}
+
+.input-box {
+  @apply p-2 w-full text-xl bg-white border-2 border-d-blue focus:ring-1 ring-d-blue my-2 rounded
+}
+
+.btn {
+  @apply bg-l-blue text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100
+}
+
+.btn-cancel {
+  @apply bg-red-500 text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: '📸 image';
 }

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +16,6 @@ export function LoginForm() {
     async function loginHandler(e) {
         e.preventDefault();
         await dispatch(loginUser({email, password}));
-        navigate("/");
     };
 
     useEffect(() => {

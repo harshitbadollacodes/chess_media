@@ -4,36 +4,51 @@ import { API } from "../../constants/config";
 
 export const loginUser = createAsyncThunk(
     "user/loginUser",
-    async({email, password}) => {
-        const response = await axios.post(`${API}/user/login`, {
-            email, 
-            password
-        });
-
-        return response.data
+    async({email, password},{rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/user/login`, {
+                email, 
+                password
+            });
+            
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
-    async({firstName, lastName, username, email, password}) => {
-        const response = await axios.post(`${API}/user/signup`, {
-            firstName, 
-            lastName,
-            username,
-            email, 
-            password
-        });
-
-        return response.data;
+    async({firstName, lastName, username, email, password}, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/user/signup`, {
+                firstName, 
+                lastName,
+                username,
+                email, 
+                password
+            });
+    
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
 )
 
 export const getAllUsers = createAsyncThunk(
     "user/getAllUsers", 
-    async() => {
-        const response = await axios.get(`${API}/user/allUsers`);
-        return response.data;
+    async(_, {rejectWithValue}) => {
+        try {
+            const response = await axios.get(`${API}/user/allUsers`);
+            return response.data;
+        } catch(error){
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
@@ -90,6 +105,7 @@ export const userSlice = createSlice({
 
         [loginUser.fulfilled]: (state, action) => {
             const { userId, firstName, lastName, username, token } = action.payload;
+            
             localStorage.setItem("userId", JSON.stringify(userId));
             localStorage.setItem("token", JSON.stringify(token));
             localStorage.setItem("firstName", JSON.stringify(firstName));
@@ -108,7 +124,7 @@ export const userSlice = createSlice({
 
         [loginUser.rejected]: (state, action) => {
             state.status = "error";
-            state.error = action.error.message;
+            state.error = action.payload
         },
 
         [signUpUser.pending]: (state) => {

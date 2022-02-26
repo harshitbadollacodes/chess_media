@@ -4,71 +4,115 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const loadPostsData = createAsyncThunk(
     "posts/loadPostsData",
-    async (token) => {    
-        const response = await axios.get(`${API}/posts`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        
-        return response.data;
+    async (token, {rejectWithValue}) => {    
+        try{
+            const response = await axios.get(`${API}/posts`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
 export const addPost = createAsyncThunk(
     "post/addPost",
-    async ({token, postInput, imageURL}) => {
-        const response = await axios.post(`${API}/posts/new`, {
-            postInput, 
-            imageURL
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response.data;    
+    async ({token, postInput, imageURL}, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/posts/new`, {
+                postInput, 
+                imageURL
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;    
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
 export const likeButtonClicked = createAsyncThunk(
     "posts/likeButtonClicked", 
-    async ({token, postId}) => {
-    
-    const response = await axios.post(`${API}/posts/like/${postId}/`, {}, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-    
-    return response.data;
-});
-
-export const savePost = createAsyncThunk(
-    "posts/savePost", 
-    async ({token, postId}) => {
-        const response = await axios.post(`${API}/posts/save/${postId}/`, {}, {
+    async ({token, postId}, {rejectWithValue}) => {
+    try {
+        const response = await axios.post(`${API}/posts/like/${postId}/`, {}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
         
         return response.data;
+    } catch(error) {
+        console.log({error});
+        return rejectWithValue(error.response.data.message);
+    }
+    
+});
+
+export const savePost = createAsyncThunk(
+    "posts/savePost", 
+    async ({token, postId}, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/posts/save/${postId}/`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     
     }
 );
 
 export const getPosts = createAsyncThunk(
     "posts/getPosts",
-    async ({token, profileId}) => {
-        const response = await axios.get(`${API}/posts/getPosts/${profileId}`, {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        })
-
-        return response.data;
+    async ({token, profileId}, {rejectWithValue}) => {
+        try {
+            const response = await axios.get(`${API}/posts/getPosts/${profileId}`, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
+    
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
     }
-)
+);
+
+export const removePost = createAsyncThunk(
+    "post/removePost",
+    async ({token, postId}, {rejectWithValue}) => {
+        try {
+            console.log(token, postId);
+            const response = await axios.post(`${API}/posts/removePost/${postId}`, {}, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
+
+            return response.data;
+        } catch(error) {
+            console.log({error});
+            return rejectWithValue(error.response.data.message);
+        }
+    }
+);
 
 export const postSlice = createSlice({
     name: "Post",

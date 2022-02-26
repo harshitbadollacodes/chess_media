@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { FaBookmark, FaHeart, FaRegBookmark, FaRegHeart } from "react-icons/fa"
+import { BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { likeButtonClicked, loadPostsData, savePost } from "./postSlice";
+import { likeButtonClicked, loadPostsData, removePost, savePost } from "./postSlice";
 
 export function PostsList({ posts }) {
 
@@ -44,13 +45,21 @@ export function PostsList({ posts }) {
                 key={post._id} 
                 className="mx-2 w-full"
             >
-                <Link 
-                    to={`/profile/${post.user._id}`} 
-                    className="font-bold hover:text-l-blue"
-                >
-                    <p className="capitalize"> { post.user.firstName } { post.user.lastName } </p>
-                    <p className="font-extralight"> @{ post.user.username } </p>
-                </Link>   
+                <div className="flex justify-between">
+                    <Link 
+                        to={`/profile/${post.user._id}`} 
+                        className="font-bold hover:text-l-blue"
+                    >
+                        <p className="capitalize"> { post.user.firstName } { post.user.lastName } </p>
+                        <p className="font-extralight"> @{ post.user.username } </p>
+                    </Link>   
+                    {
+                        post.user._id === userId &&
+                        <button onClick={() => dispatch(removePost({token, postId: post._id}))}>
+                            <BsTrash />
+                        </button>
+                    }
+                </div>
 
                 <p className="text-xl my-2 w-full "> {post.postContent} </p>
                 

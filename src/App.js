@@ -68,12 +68,33 @@ function App(){
                             </PrivateRoute>
                         }
                     />
+                    <Route 
+                        path="/editBio" 
+                        element={ 
+                            <PrivateRoute>
+                                <EditBio/> 
+                            </PrivateRoute>
+                        } 
+                    />
+                    <Route 
+                        path="/following/:profileId" 
+                        element={ 
+                            <PrivateRoute>
+                                <Following/> 
+                            </PrivateRoute>
+                        } 
+                    />
+                    <Route 
+                        path="/followers/:profileId" 
+                        element={ 
+                            <PrivateRoute>
+                                <Followers/> 
+                            </PrivateRoute>
+                        } 
+                    />
 
                     <Route path="/login" element={ <Login/> } />
                     <Route path="/signup" element={ <Signup/> } />
-                    <Route path="/editBio" element={ <EditBio/> } />
-                    <Route path="/following/:profileId" element={ <Following/> } />
-                    <Route path="/followers/:profileId" element={ <Followers/> } />
 
                 </Routes>
                 <Widgets/>

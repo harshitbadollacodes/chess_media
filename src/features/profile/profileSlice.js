@@ -62,9 +62,9 @@ export const profileSlice = createSlice({
         },
 
         [editBio.fulfilled]: (state, action) => {
+            state.status = "bio updated";
             const { userDetails } = action.payload;
             console.log(userDetails);
-            state.status = "fulfilled";
         },
 
         [followUser.pending]: (state) => {

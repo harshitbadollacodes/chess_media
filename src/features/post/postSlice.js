@@ -260,14 +260,10 @@ export const postSlice = createSlice({
 
         [editPost.fulfilled]: (state, action) => {
             state.status = "fulfilled";
-            // state.posts = state.posts.map(post => post._id === action.payload.post._id 
-            //     ? action.payload.post 
-            //     : post
-            // );
-            console.log(action.payload.post._id);
-            let findPost = state.posts.find(post => post._id === action.payload.post._id);
-            console.log(current(findPost));
-            findPost = action.payload.post
+            state.posts = state.posts.map(post => post._id === action.payload.post._id 
+                ? action.payload.post 
+                : post
+            );
         },
 
         [addComment.fulfilled]: (state, action) => {

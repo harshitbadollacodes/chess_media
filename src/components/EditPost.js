@@ -18,6 +18,8 @@ export const EditPost = () => {
         text: post.postContent
     });    
 
+    console.log(postInput.text);
+
     const [imageURL, setImageURL] = useState("");
     
 
@@ -87,7 +89,6 @@ export const EditPost = () => {
                 />
 
             </form>
-
 
         </div>
 

@@ -124,7 +124,7 @@ export const userSlice = createSlice({
 
         [loginUser.rejected]: (state, action) => {
             state.status = "error";
-            state.error = action.payload
+            state.error = action.payload;
         },
 
         [signUpUser.pending]: (state) => {
@@ -150,7 +150,7 @@ export const userSlice = createSlice({
 
         [signUpUser.rejected]: (state, action) => {
             state.status = "error";
-            state.error = action.error.message;
+            state.error = action.payload;
         },
 
         [getAllUsers.fulfilled]: (state, action) => {

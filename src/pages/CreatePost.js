@@ -13,10 +13,16 @@ export function CreatePost() {
         text: "",
     });
 
+    const [charCount, setCharCount] = useState(250);
+
     const [imageURL, setImageURL] = useState("");
 
     function postInputHandler(e) {
-        setPostInput({...postInput, text: e.target.value})
+        setPostInput({...postInput, text: e.target.value});
+        const inputLength = e.target.value.length;
+        const maxChar = 250;
+        const charLeft = maxChar - inputLength;
+        setCharCount(() => charLeft);
     };
 
     const dispatch = useDispatch();
@@ -37,7 +43,7 @@ export function CreatePost() {
     };
 
     useEffect(() => {
-        
+    
     }, [status, navigate]);
 
     async function uploadImageHandler(e) {
@@ -61,7 +67,7 @@ export function CreatePost() {
             <form>
                 <input 
                     type="file" 
-                    className="custom-file-input my-2 cursor-pointer rounded-lg border border-d-blue p-2"    
+                    className="custom-file-input my-2 cursor-pointer rounded-lg border border-d-blue p-2"
                     onChange={(e) => uploadImageHandler(e)} 
                 />
             </form>
@@ -75,14 +81,23 @@ export function CreatePost() {
                     onChange={postInputHandler}
                 >
                 </textarea>
-                
-                <input                
-                    className={
-                        ` ${postInput.text.length === 0 ? "bg-l-blue cursor-not-allowed " : "bg-l-blue cursor-pointer"} btn block ml-auto`
-                    }
-                    type="submit"
-                />
 
+                
+                <div className="flex justify-center items-center">
+                    <h3 className={`font-bold ${charCount < 0 && "text-red-700" }`}> {charCount} </h3>
+                    <input                
+                        className={
+                            `${postInput.text.length === 0 
+                                ? "bg-l-blue cursor-not-allowed " 
+                                : "bg-l-blue cursor-pointer"
+                            } 
+                                btn block ml-auto
+                            `
+                        }
+                        type="submit"
+                        disabled={postInput.text.length > 250}
+                    />
+                </div>
             </form>
         </div>
     )

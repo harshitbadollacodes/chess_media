@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { PostsList } from "../features/post/PostsList";
+import { PostList } from "../features/post/PostList";
 
 export function Home() {
 
@@ -7,7 +7,7 @@ export function Home() {
 
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
-            <PostsList posts={posts}/>
+            <PostList posts={posts}/>
         </div>
     );
 }

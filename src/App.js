@@ -14,6 +14,8 @@ import { EditBio } from "./components/EditBio";
 import { Following } from "./components/Following";
 import { Followers } from "./components/FollowersList";
 import { MobileNav } from "./components/MobileNav";
+import { EditPost } from "./components/EditPost";
+import { PostCard } from "./features/post/PostCard";
 
 function App(){
     return (
@@ -91,6 +93,23 @@ function App(){
                                 <Followers/> 
                             </PrivateRoute>
                         } 
+                    />
+                    <Route
+                        path="/editPost/:postId"
+                        element={
+                            <PrivateRoute>
+                                <EditPost/>
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/post/:postId"
+                        element={
+                            <PrivateRoute>
+                                <PostCard/>
+                            </PrivateRoute>
+                        }
                     />
 
                     <Route path="/login" element={ <Login/> } />

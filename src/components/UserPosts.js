@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { PostsList } from "../features/post/PostsList";
+import { PostList } from "../features/post/PostList";
 
 export function UserPosts() {
 
@@ -13,7 +13,7 @@ export function UserPosts() {
     });
     
     return (
-        <PostsList posts={userPosts}/>
+        <PostList posts={userPosts}/>
     )
     
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signUpUser } from "../features/user/userSlice";
+import { signUpUser } from "./userSlice";
 
 export function SignupForm() {
 

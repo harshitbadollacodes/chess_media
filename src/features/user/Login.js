@@ -1,5 +1,6 @@
 import chessBanner from "../../images/chessBanner.jpeg";
-import { LoginForm } from "../../components/LoginForm";
+import { LoginForm } from "./LoginForm";
+
 
 export function Login(){
 

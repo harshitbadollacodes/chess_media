@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editBio } from "../features/profile/profileSlice";
+import { editBio } from "./profileSlice";
 
 export function EditBio() {
 

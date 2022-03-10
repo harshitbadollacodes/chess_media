@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { PostList } from "../features/post/PostList";
+import { PostList } from "./PostList";
 
 export function UserPosts() {
 

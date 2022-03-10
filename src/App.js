@@ -10,11 +10,11 @@ import { PrivateRoute } from "./utils/PrivateRoute";
 import { Login } from "./features/user/Login";
 import { Signup } from "./features/user/Signup";
 import { CreatePost } from "./pages/CreatePost";
-import { EditBio } from "./components/EditBio";
-import { Following } from "./components/Following";
-import { Followers } from "./components/FollowersList";
+import { EditBio } from "./features/profile/EditBio";
+import { Following } from "./features/profile/Following";
+import { Followers } from "./features/profile/FollowersList";
 import { MobileNav } from "./components/MobileNav";
-import { EditPost } from "./components/EditPost";
+import { EditPost } from "./features/post/EditPost";
 import { PostCard } from "./features/post/PostCard";
 
 function App(){

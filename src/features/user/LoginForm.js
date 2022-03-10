@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, resetAuthStatus } from "../features/user/userSlice";
+import { loginUser, resetAuthStatus } from "./userSlice";
 
 export function LoginForm() {
 
@@ -17,6 +17,11 @@ export function LoginForm() {
         e.preventDefault();
         await dispatch(loginUser({email, password}));
     };
+
+    function guestCrendentialHandler(){
+        setEmail("vish@gmail.com");
+        setPassword("testing");
+    }
 
     useEffect(() => {
         dispatch(resetAuthStatus());
@@ -34,7 +39,7 @@ export function LoginForm() {
                     {error}
                 </p>
             )}
-
+                
             <form
                 className="w-full md:w-[70%]"
                 onSubmit={(e) => loginHandler(e)}    
@@ -77,9 +82,19 @@ export function LoginForm() {
                 <input 
                     type="submit"
                     value={status === "loading" ? "Logging in..." : "Login" }
-                    className="cursor-pointer w-full mt-4 bg-blue-500 hover:bg-d-blue hover:text-white transition-colors duration-300 p-2 rounded" 
+                    className="btn cursor-pointer w-full mt-4" 
                 />
+
+                <button 
+                    onClick={guestCrendentialHandler}
+                    className="btn my-2 w-full"
+                >
+                    Guest Credentials
+                </button>
+
             </form>
+
+            
 
         </div>
     );

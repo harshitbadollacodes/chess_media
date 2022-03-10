@@ -1,5 +1,5 @@
-import { SignupForm } from "../../components/SignupForm";
 import chessBanner from "../../images/chessBanner.jpeg";
+import { SignupForm } from "./SignupForm";
 
 export function Signup() {
 

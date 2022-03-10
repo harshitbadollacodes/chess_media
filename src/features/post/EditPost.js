@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editPost } from "../features/post/postSlice";
+import { editPost } from "./postSlice";
 
 export const EditPost = () => {
     

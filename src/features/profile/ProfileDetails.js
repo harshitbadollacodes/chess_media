@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { UserPosts } from "../../components/UserPosts";
+import { UserPosts } from "../post/UserPosts";
 import { getPosts } from "../post/postSlice";
 import { logoutUser } from "../user/userSlice";
 import { followUser, getUserDetails } from "./profileSlice";
@@ -11,7 +11,10 @@ export function ProfileDetails() {
     const { profileId } = useParams();
     
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, error } = useSelector(state => state.profile);
+    const { userDetails, followingUsers, error } = useSelector(state => state.profile);
+
+    console.log(userDetails);
+    console.log(followingUsers);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();

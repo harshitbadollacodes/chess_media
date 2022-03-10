@@ -10,17 +10,19 @@ export function Widgets() {
 
     const [searchInput, setSearchInput] = useState("");
 
-    const { allUsers } = useSelector(state => state.user);
+    const { allUsers, status } = useSelector(state => state.user);
 
-    const renderUserList = allUsers?.filter(user => user.firstName.toLowerCase().includes(searchInput.toLowerCase()));
+    const userList = allUsers?.filter(user => user.firstName.toLowerCase().includes(searchInput.toLowerCase()));
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAllUsers());
-    }, [dispatch]);
+        if (status === "idle") {
+            dispatch(getAllUsers());
+        }
+    }, [dispatch, status]);
 
-    const renderAllUsers = renderUserList?.map(user => (
+    const renderAllUsers = userList?.map(user => (
             <li 
                 key={user._id} 
                 className="p-2 bg-white border-2 rounded-xl flex justify-between m-2 items-center hover:bg-d-blue hover:text-white"
@@ -35,23 +37,26 @@ export function Widgets() {
     ));
 
 
-    return pathName !== "login" && 
-        pathName !== "signup" && (
+    return (
+        pathName !== "login" && 
+        pathName !== "signup" && 
+        (
             <div className="py-2 mr-2 mt-2 hidden lg:flex">
                 <div>
                     <h1 className="font-bold text-2xl">Search Users</h1>
-                <input 
-                    type="text"  
-                    value={searchInput}
-                    placeholder="Search Users" 
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    className="border-2 w-full p-2 rounded-xl mt-2 outline-none"
-                />
-                <ul>
-                    {renderAllUsers?.length === 0 && <p>No matches</p>}
-                    {renderAllUsers}
-                </ul>
+                    <input 
+                        type="text"  
+                        value={searchInput}
+                        placeholder="Search Users" 
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        className="border-2 w-full p-2 rounded-xl mt-2 outline-none"
+                    />
+                    <ul>
+                        {renderAllUsers?.length === 0 && <p>No Users Found</p>}
+                        {renderAllUsers}
+                    </ul>
+                </div>
             </div>
-        </div>
-    );
+        )
+    )
 }

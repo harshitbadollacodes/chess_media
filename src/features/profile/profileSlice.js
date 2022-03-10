@@ -2,7 +2,7 @@ import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API } from "../../constants/config";
 
-export const getUserDetails = createAsyncThunk(
+export const getUserDetails = createAsyncThunk( 
     "profile/getUserDetails", 
     async (userId) => {        
         const response = await axios.get(`${API}/user/profile/${userId}`);

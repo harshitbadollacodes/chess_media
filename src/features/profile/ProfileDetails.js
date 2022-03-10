@@ -4,17 +4,19 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserPosts } from "../post/UserPosts";
 import { getPosts } from "../post/postSlice";
 import { logoutUser } from "../user/userSlice";
-import { followUser, getUserDetails } from "./profileSlice";
+import { getUserDetails } from "./profileSlice";
+import { FollowButton } from "./FollowButton";
 
 export function ProfileDetails() {
     
     const { profileId } = useParams();
-    
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, followingUsers, error } = useSelector(state => state.profile);
+    const { userDetails, error } = useSelector(state => state.profile);
 
-    console.log(userDetails);
-    console.log(followingUsers);
+    const followersList = userDetails?.followersList;
+
+    const numberOfFollowers = userDetails?.followersList?.length;
+    const numberOfFollowing = userDetails?.followingList?.length;
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,22 +24,11 @@ export function ProfileDetails() {
     function editHandler() {
         navigate("/editBio");
     };
-    
-    let getFollowerId = userDetails.followersList?.find(user => {
-        return user === userId;
-    });
-    
-    let isUserFollowing = getFollowerId === userId;
-
-
-    function followHandler(profileId, token) {
-        dispatch(followUser({profileId, token}));
-    };
 
     function logout() {
         dispatch(logoutUser());
         navigate("/login");
-    }
+    };
 
     useEffect(() => {
         dispatch(getUserDetails(profileId));
@@ -82,28 +73,24 @@ export function ProfileDetails() {
                                 </button> 
                             }
 
-                            { profileId !== userId 
-                                && <button 
-                                    className={`mr-2 btn ${isUserFollowing && "bg-d-blue"}`}
-                                    onClick={() => followHandler(profileId, token)}
-                                    disabled={token ? false : true}
-                                >
-                                    { isUserFollowing ? "Unfollow" : "Follow" }
-                                </button>   
-                            }
-
+                            <FollowButton 
+                                userId={userId}
+                                profileId={profileId}
+                                list={followersList}
+                            />
+                            
                             <Link
                                 to={`/following/${profileId}`}
                                 className="mr-2 text-xl border-l-blue text-center w-full border-2 p-1.5 rounded-lg hover:bg-d-blue hover:text-white"
                             >
-                                Following
+                                <span>{numberOfFollowing}</span> Following
                             </Link>
 
                             <Link
-                                to={`/followers/${userId}`} 
+                                to={`/followers/${profileId}`} 
                                 className="text-xl border-l-blue text-center w-full border-2 p-1.5 rounded-lg hover:bg-d-blue hover:text-white"
                             >
-                                Followers
+                                <span>{numberOfFollowers}</span> {numberOfFollowers === 1 ? "Follower" : "Followers"}
                             </Link>
 
                         </div>

@@ -3,29 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getUserDetails } from "./profileSlice";
 
-export function FollowersList() {
+export function FollowingList() {
 
     const { profileId } = useParams();
 
-    const { userDetails: { followersList } } = useSelector(state => state.profile);
+    const { userDetails: { followingList } } = useSelector(state => state.profile);
     
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUserDetails(profileId));
     }, [profileId, dispatch]);
-
+    
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
             <h1 
                 className="text-xl font-bold"
             >
-                Followers
+                Following
             </h1>
+            
             {
-                followersList?.map(({_id, firstName, username}) => (
-                    <div
-                        key={_id} 
+                followingList?.map(({_id, firstName, username}) => (
+                    <div 
+                        key={_id}
                         className="flex justify-between my-4 items-center bg-white p-2 rounded-xl"
                     >
                         
@@ -37,6 +38,7 @@ export function FollowersList() {
                     </div>
                 ))
             }
+
         </div>
     );
 }

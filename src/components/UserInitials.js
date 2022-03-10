@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
-
-export function UserInitials() {
+export function UserInitials({ firstName, lastName, userId }) {
     const { userId, firstName, lastName } = useSelector(state => state.user);
 
     return (

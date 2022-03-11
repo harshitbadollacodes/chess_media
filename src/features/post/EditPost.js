@@ -18,8 +18,6 @@ export const EditPost = () => {
         text: post.postContent
     });    
 
-    console.log(postInput.text);
-
     const [imageURL, setImageURL] = useState("");
     
 
@@ -69,6 +67,16 @@ export const EditPost = () => {
                     onChange={(e) => uploadImageHandler(e)} 
                 />
             </form>
+
+            <h1 className="text-xl font-bold">
+                Image Preview
+            </h1>
+
+            <img 
+                src={imageURL || post.image} 
+                className="my-2"
+                alt="I"
+            />
 
             <form onSubmit={postHandler}>
                 <textarea 

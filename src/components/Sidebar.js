@@ -87,5 +87,5 @@ export function Sidebar() {
             </button>
 
         </div>
-  );
+    );
 };

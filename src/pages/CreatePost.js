@@ -74,7 +74,11 @@ export function CreatePost() {
 
             {
                 imageURL &&
-                <img src={imageURL} alt={postInput.text}/>
+                <img 
+                    className="my-2"
+                    src={imageURL} 
+                    alt={postInput.text}
+                />
             
             }
 

@@ -18,9 +18,8 @@ export const EditPost = () => {
         text: post.postContent
     });    
 
-    const [imageURL, setImageURL] = useState("");
+    const [imageURL, setImageURL] = useState(post.image);
     
-
     function postInputHandler(e) {
         setPostInput({...postInput, text: e.target.value})
     };
@@ -40,7 +39,6 @@ export const EditPost = () => {
         if (status === "fulfilled") {
             navigate("/");
         }
-
     };
 
     async function uploadImageHandler(e) {
@@ -57,7 +55,6 @@ export const EditPost = () => {
         };
     };
 
-
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
             <form>
@@ -73,9 +70,9 @@ export const EditPost = () => {
             </h1>
 
             <img 
-                src={imageURL || post.image} 
+                src={imageURL} 
                 className="my-2"
-                alt="I"
+                alt="Image"
             />
 
             <form onSubmit={postHandler}>

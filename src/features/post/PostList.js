@@ -9,7 +9,6 @@ import { Username } from "../../components/Username";
 import { UserDisplayPicture } from "../../components/UserDisplayPicture";
 
 export function PostList({ posts }) {
-    console.log(posts);
     const { userId, token } = useSelector(state => state.user);
     const { status } = useSelector(state => state.posts);
     

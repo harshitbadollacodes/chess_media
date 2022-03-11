@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API } from "../../constants/config";
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const loadPostsData = createAsyncThunk(
     "posts/loadPostsData",

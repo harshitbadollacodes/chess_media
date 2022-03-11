@@ -53,12 +53,18 @@ export function PostList({ posts }) {
                         {
                             post.user._id === userId &&
                             <div>
-                                <button onClick={() => dispatch(removePost({token, postId: post._id}))}>
-                                    <BsTrash />
+                                <button 
+                                    className="hover:text-red-500"
+                                    onClick={() => dispatch(removePost({token, postId: post._id}))}
+                                >
+                                    <BsTrash size={20} />
                                 </button>
 
-                                <Link to={`/editPost/${post._id}`}>
-                                    <BsPencil />
+                                <Link 
+                                    to={`/editPost/${post._id}`}
+                                    className="hover:text-blue-500"
+                                >
+                                    <BsPencil size={20} />
                                 </Link>
 
                             </div>

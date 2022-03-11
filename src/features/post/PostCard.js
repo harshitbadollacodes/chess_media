@@ -88,8 +88,11 @@ export const PostCard = () => {
                             </div>
 
                             { comment.user._id === userId &&
-                                <button onClick={() => removeCommentHandler(token, comment._id, postId)}>
-                                    <BsTrash/>
+                                <button 
+                                    className="hover:text-red-500"
+                                    onClick={() => removeCommentHandler(token, comment._id, postId)}
+                                >
+                                    <BsTrash size={20} />
                                 </button>
                             }
 

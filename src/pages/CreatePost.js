@@ -72,6 +72,12 @@ export function CreatePost() {
                 />
             </form>
 
+            {
+                imageURL &&
+                <img src={imageURL} alt={postInput.text}/>
+            
+            }
+
             <form onSubmit={postHandler}>
                 <textarea 
                     className="resize-none text-xl w-full p-6 outline-none min-h-[120px] border-2 border-d-blue rounded-[10px]"

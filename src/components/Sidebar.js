@@ -1,15 +1,24 @@
-import { NavLink } from "react-router-dom";
-import { FaPlus, FaRegBell } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FaPlus, FaRegBell, FaSignOutAlt } from "react-icons/fa";
 import { MdOutlineExplore } from "react-icons/md";
 import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlineHome } from "react-icons/ai";
 import { GetPathName } from "../utils/GetPathName";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../features/user/userSlice";
 
 export function Sidebar() {
 
     const pathName = GetPathName();
     const { userId } = useSelector(state => state.user);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    function logout() {
+        dispatch(logoutUser());
+        navigate("/login");
+    };
 
     return pathName !=="login" && 
         pathName !== "signup" && (
@@ -68,6 +77,14 @@ export function Sidebar() {
                 <FaPlus size={24}/>
                 <h3 className="ml-4 text-l">Post</h3>
             </NavLink>
+
+            <button 
+                className=" sidebarLink"
+                onClick={() => logout()}
+            >
+                <FaSignOutAlt size={24}/>
+                <h3 className="ml-4 text-l">Logout</h3>
+            </button>
 
         </div>
   );

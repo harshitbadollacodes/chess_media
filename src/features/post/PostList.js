@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader } from "../../components/Loader";
 import { likeButtonClicked, loadPostsData, removePost, savePost } from "./postSlice";
+import { Username } from "../../components/Username";
+import { UserDisplayPicture } from "../../components/UserDisplayPicture";
 
 export function PostList({ posts }) {
-
+    console.log(posts);
     const { userId, token } = useSelector(state => state.user);
     const { status } = useSelector(state => state.posts);
     
@@ -30,17 +32,9 @@ export function PostList({ posts }) {
             className="border-2 p-2 my-2 flex rounded-xl bg-white" 
             key={post._id}
         >
-            <div 
-                className="border-2 hover:border-l-blue transition-colors duration-300 rounded-full p-4 h-14 w-14 flex items-center justify-center"
-            >
-                <Link 
-                    to={`/profile/${post.user._id}`} 
-                    className="font-bold text-xl"
-                >
-                    {post.user.firstName.split("")[0].toUpperCase()}
-                    {post.user.lastName.split("")[0].toUpperCase()}
-                </Link>
-            </div>
+            
+                
+            <UserDisplayPicture displayPicture={post.user.displayPicture}/>
             
             <div 
                 key={post._id} 
@@ -51,8 +45,10 @@ export function PostList({ posts }) {
                         to={`/profile/${post.user._id}`} 
                         className="font-bold hover:text-l-blue"
                     >
-                        <p className="capitalize"> { post.user.firstName } { post.user.lastName } </p>
-                        <p className="font-extralight"> @{ post.user.username } </p>
+                        <Username 
+                            firstName={post.user.firstName} 
+                            username={post.user.username}
+                        />
                     </Link>   
                     
                         {

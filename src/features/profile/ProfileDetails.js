@@ -3,15 +3,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserPosts } from "../post/UserPosts";
 import { getPosts } from "../post/postSlice";
-import { logoutUser } from "../user/userSlice";
 import { getUserDetails } from "./profileSlice";
 import { FollowButton } from "./FollowButton";
+import { UserDisplayPicture } from "../../components/UserDisplayPicture";
+import { Username } from "../../components/Username";
 
 export function ProfileDetails() {
     
     const { profileId } = useParams();
     const { userId, token } = useSelector(state => state.user);
     const { userDetails, error } = useSelector(state => state.profile);
+    console.log(userDetails);
 
     const followersList = userDetails?.followersList;
 
@@ -23,11 +25,6 @@ export function ProfileDetails() {
 
     function editHandler() {
         navigate("/editBio");
-    };
-
-    function logout() {
-        dispatch(logoutUser());
-        navigate("/login");
     };
 
     useEffect(() => {
@@ -42,19 +39,26 @@ export function ProfileDetails() {
                 
                 <div className="flex mt-8 w-full m-2">
                     <div className="flex w-full flex-col mx-4">
-                        
-                        <div className="flex justify-between">
-                            <div>
-                                <h1 className="text-xl font-bold capitalize">{userDetails.firstName}</h1>
-                                <h3 className="text-gray-400 text-l">@{userDetails.username}</h3>
+                        <div  className="flex justify-between">
+                            <div className="flex items-center">
+                                <UserDisplayPicture 
+                                    displayPicture={userDetails.displayPicture}
+                                />
+                                <Username 
+                                    firstName={userDetails.firstName}
+                                    username={userDetails.username}
+                                />
                             </div>
-                            {   profileId === userId &&
-                                <button 
+                            { profileId === userId  
+                                && <div>
+                                    <button 
                                     className="btn"
-                                    onClick={() => logout()}
+                                    onClick={() => editHandler()}
+                                    disabled={token ? false : true}
                                 >
-                                    Logout
-                                </button>
+                                    Edit Profile
+                                </button> 
+                                </div>
                             }
                         </div>
 
@@ -62,16 +66,7 @@ export function ProfileDetails() {
                             <p className="w-full">{userDetails.bio}</p>
                         </div>
                         
-                        <div className="my-2 w-[60%] flex items-center">
-                            { profileId === userId  
-                                && <button 
-                                    className="mr-2 btn"
-                                    onClick={() => editHandler()}
-                                    disabled={token ? false : true}
-                                >
-                                    Edit Bio
-                                </button> 
-                            }
+                        <div className="my-2 lg:w-[60%] flex items-center">
 
                             <FollowButton 
                                 userId={userId}
@@ -104,3 +99,12 @@ export function ProfileDetails() {
         </div>
     )
 };
+
+// {   profileId === userId &&
+    // <button 
+    //     className="btn"
+    //     onClick={() => logout()}
+    // >
+    //     Logout
+    // </button>
+// }

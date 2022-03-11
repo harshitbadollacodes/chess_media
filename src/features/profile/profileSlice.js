@@ -12,9 +12,10 @@ export const getUserDetails = createAsyncThunk(
 
 export const editBio = createAsyncThunk(
     "profile/editBio",
-    async({bio, token}) => {
+    async({bio, imageURL, token}) => {
         const response = await axios.post(`${API}/user/editBio`, {
-            bio
+            bio, 
+            imageURL
         }, {
             headers: {
                 Authorization: `Bearer ${token}`

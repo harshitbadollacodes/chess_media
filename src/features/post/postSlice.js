@@ -58,24 +58,27 @@ export const likeButtonClicked = createAsyncThunk(
     
 });
 
-export const savePost = createAsyncThunk(
-    "posts/savePost", 
-    async ({token, postId}, {rejectWithValue}) => {
-        try {
-            const response = await axios.post(`${API}/posts/save/${postId}/`, {}, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+// export const savePost = createAsyncThunk(
+//     "posts/savePost", 
+//     async ({token, postId}, {rejectWithValue}) => {
+//         console.log(`${API}/user/bookmarkPost/${postId}`);
+//         try {
+//             const response = await axios.post(`${API}/user/bookmarkPost/${postId}`, {}, {
+//                 headers: {
+//                     Authorization: `Bearer ${token}`
+//                 }
+//             });
+
+//             console.log(response);
             
-            return response.data;
-        } catch(error) {
-            console.log({error});
-            return rejectWithValue(error.response.data.message);
-        }
+//             return response.data;
+//         } catch(error) {
+//             console.log({error});
+//             return rejectWithValue(error.response.data.message);
+//         }
     
-    }
-);
+//     }
+// );
 
 export const getPosts = createAsyncThunk(
     "posts/getPosts",
@@ -184,7 +187,8 @@ export const postSlice = createSlice({
         status: "idle",
         error: null,
         userProfile: {},
-        userPosts: []
+        userPosts: [],
+        bookmarkedPosts: []
     },
     reducers: {},
 
@@ -225,16 +229,16 @@ export const postSlice = createSlice({
             state.error = action.payload;
         },
 
-        [savePost.fulfilled]: (state, action) => {
-            let updatedPost = action.payload.post
-            state.status = "fulfilled";
-            let findPost = state.posts.find(post => post._id === updatedPost._id);
-            findPost.savedPosts = updatedPost.savedPosts;
-        },
-        [savePost.rejected]: (state, action) => {
-            state.status = "error";
-            state.error = action.payload;
-        },
+        // [savePost.fulfilled]: (state, action) => {
+        //     let updatedPost = action.payload.post
+        //     state.status = "fulfilled";
+        //     let findPost = state.posts.find(post => post._id === updatedPost._id);
+        //     findPost.savedPosts = updatedPost.savedPosts;
+        // },
+        // [savePost.rejected]: (state, action) => {
+        //     state.status = "error";
+        //     state.error = action.payload;
+        // },
 
         [getPosts.pending]: (state) => {
             state.status = "loading"
@@ -276,13 +280,12 @@ export const postSlice = createSlice({
 
         [removeComment.fulfilled]: (state, action) => {
             state.status = "Comment Deleted";
-            console.log(action.payload.post.comments);
             state.posts = state.posts.map(post => post._id === action.payload.post._id 
                 ? {...post, comments: action.payload.post.comments}
                 : post
             );
             
-        }
+        },
 
     }
 

@@ -16,6 +16,10 @@ body {
   @apply bg-l-blue rounded-lg 
 }
 
+.loader {
+  @apply w-[80px] h-[80px] border-[10px] rounded-full border-gray-300 border-t-blue-500 animate-spin flex justify-center
+}
+
 .sidebarLink {
   @apply p-3 flex items-center hover:bg-d-blue transition delay-100 rounded-lg ease-in-out hover:text-white my-1
 }

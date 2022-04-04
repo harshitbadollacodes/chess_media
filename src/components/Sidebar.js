@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaPlus, FaRegBell, FaSignOutAlt } from "react-icons/fa";
+import { FaBookmark, FaPlus, FaRegBell, FaRegBookmark, FaSignOutAlt } from "react-icons/fa";
 import { MdOutlineExplore } from "react-icons/md";
 import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlineHome } from "react-icons/ai";
@@ -22,7 +22,7 @@ export function Sidebar() {
 
     return pathName !=="login" && 
         pathName !== "signup" && (
-        <div className="hidden lg:flex flex-col py-2 mr-2 mt-2 w-[20%] sticky top-0">
+        <aside className="hidden lg:flex flex-col py-2 mr-2 mt-2 w-[20%] sticky top-0">
             <NavLink 
                 to="/" 
                 className={`
@@ -78,6 +78,17 @@ export function Sidebar() {
                 <h3 className="ml-4 text-l">Post</h3>
             </NavLink>
 
+            <NavLink 
+                to="/bookmark" 
+                className={`
+                    ${({ isActive }) => (isActive && 'active')}
+                    sidebarLink
+                `}
+            >
+                <FaRegBookmark size={24}/>
+                <h3 className="ml-4 text-l">Bookmark</h3>
+            </NavLink>
+
             <button 
                 className=" sidebarLink"
                 onClick={() => logout()}
@@ -85,7 +96,6 @@ export function Sidebar() {
                 <FaSignOutAlt size={24}/>
                 <h3 className="ml-4 text-l">Logout</h3>
             </button>
-
-        </div>
+        </aside>
     );
 };

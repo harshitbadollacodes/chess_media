@@ -4,39 +4,53 @@ import { API } from "../../constants/config";
 
 export const getUserDetails = createAsyncThunk( 
     "profile/getUserDetails", 
-    async (userId) => {        
-        const response = await axios.get(`${API}/user/profile/${userId}`);
-        return response.data;
+    async (userId, {rejectWithValue}) => {        
+        try {
+            const response = await axios.get(`${API}/user/profile/${userId}`);
+            return response.data;
+        } catch(error) {
+            console.log(error);
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
 export const editBio = createAsyncThunk(
     "profile/editBio",
-    async({bio, imageURL, token}) => {
-        const response = await axios.post(`${API}/user/editBio`, {
-            bio, 
-            imageURL
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        return response.data;
+    async({bio, imageURL, token}, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/user/editBio`, {
+                bio, 
+                imageURL
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+    
+            return response.data;
+        } catch(error) {
+            console.log(error);
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 
 export const followUser = createAsyncThunk(
     "profile/followUser",
-    async ({profileId, token}) => {
-        const response = await axios.post(`${API}/user/followUser/${profileId}`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log("I ran");
-        console.log(response.data);
-        return response.data;
+    async ({profileId, token}, {rejectWithValue}) => {
+        try {
+            const response = await axios.post(`${API}/user/followUser/${profileId}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            return response.data;
+        } catch(error) {
+            console.log(error);
+            return rejectWithValue(error.response.data.message);
+        }
     }
 );
 

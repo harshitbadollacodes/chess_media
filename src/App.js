@@ -16,6 +16,7 @@ import { FollowersList } from "./features/profile/FollowersList";
 import { MobileNav } from "./components/MobileNav";
 import { EditPost } from "./features/post/EditPost";
 import { PostCard } from "./features/post/PostCard";
+import { SavedPosts } from "./features/profile/SavedPosts";
 
 function App(){
     return (
@@ -108,6 +109,15 @@ function App(){
                         element={
                             <PrivateRoute>
                                 <PostCard/>
+                            </PrivateRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/bookmark"
+                        element={
+                            <PrivateRoute>
+                                <SavedPosts/>
                             </PrivateRoute>
                         }
                     />

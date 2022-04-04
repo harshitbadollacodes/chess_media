@@ -7,12 +7,14 @@ import { getUserDetails } from "./profileSlice";
 import { FollowButton } from "./FollowButton";
 import { UserDisplayPicture } from "../../components/UserDisplayPicture";
 import { Username } from "../../components/Username";
+import { Loader } from "../../components/Loader";
 
 export function ProfileDetails() {
     
     const { profileId } = useParams();
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, error } = useSelector(state => state.profile);
+    const { userDetails, error, status } = useSelector(state => state.profile);
+
     console.log(userDetails);
 
     const followersList = userDetails?.followersList;
@@ -32,9 +34,14 @@ export function ProfileDetails() {
         dispatch(getPosts({token, profileId}));
     }, [profileId, dispatch, token]);
 
+    if (status === "loading") {
+        return <Loader/>
+    }
+
     return (
         <div>
             {error && <h1 className="text-red-500 text-2xl font-bold">{error}</h1>}
+            
             <div className="flex justify-between w-full items-center border-2 bg-white rounded-xl mt-2">
                 
                 <div className="flex mt-8 w-full m-2">
@@ -60,6 +67,15 @@ export function ProfileDetails() {
                                 </button> 
                                 </div>
                             }
+
+                            { profileId !== userId  
+                                &&
+                                <FollowButton 
+                                    userId={userId}
+                                    profileId={profileId}
+                                    list={followersList}
+                                />
+                            }
                         </div>
 
                         <div className="my-2">
@@ -67,12 +83,6 @@ export function ProfileDetails() {
                         </div>
                         
                         <div className="my-2 lg:w-[60%] flex items-center">
-
-                            <FollowButton 
-                                userId={userId}
-                                profileId={profileId}
-                                list={followersList}
-                            />
                             
                             <Link
                                 to={`/following/${profileId}`}
@@ -99,12 +109,3 @@ export function ProfileDetails() {
         </div>
     )
 };
-
-// {   profileId === userId &&
-    // <button 
-    //     className="btn"
-    //     onClick={() => logout()}
-    // >
-    //     Logout
-    // </button>
-// }

@@ -1,7 +1,10 @@
 import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ImgLoader } from "../../components/ImgLoader";
+import { Loader } from "../../components/Loader";
 import { editBio } from "./profileSlice";
 
 export function EditBio() {
@@ -10,7 +13,8 @@ export function EditBio() {
     const { userDetails, status } = useSelector(state => state.profile);
     
     const [inputBio, setInputBio] = useState(userDetails.bio);
-    const [displayPicture, setDisplayPicture] = useState("");
+    const [loader, setLoader] = useState(null);
+    const [displayPicture, setDisplayPicture] = useState(userDetails.displayPicture);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -28,17 +32,24 @@ export function EditBio() {
     };
 
     async function uploadImageHandler(e) {
-        let image = e.target.files[0];
+        try {
+            let image = e.target.files[0];
+            setLoader(true);
+            const formData = new FormData();
+            formData.append("file", image);
+            formData.append("upload_preset", "kutumlde");
 
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", "kutumlde");
+            const {status, data: {url} } = await axios.post("https://api.cloudinary.com/v1_1/dwrcvgzi0/image/upload", formData);
 
-        const {status, data: {url} } = await axios.post("https://api.cloudinary.com/v1_1/dwrcvgzi0/image/upload", formData);
+            if (status === 200) {
+                setDisplayPicture(url);
+                
+            };
+        } catch(error) {
 
-        if (status === 200) {
-            setDisplayPicture(url);
-        };
+        } finally {
+            setLoader(false);
+        }
     };
 
     useEffect(() => {
@@ -49,13 +60,17 @@ export function EditBio() {
 
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
-
             <div className="flex items-center my-4">
-                <img 
-                    src={displayPicture || userDetails.displayPicture} 
-                    className="h-10 w-10 md:h-20 md:w-20 border-2 rounded-full"
-                    alt={userDetails.firstName}
-                />
+                {
+                    loader ?
+                    <ImgLoader/>
+                    :
+                    <img 
+                        src={displayPicture} 
+                        className="h-10 w-10 md:h-20 md:w-20 border-2 rounded-full"
+                        alt={userDetails.firstName.split(""[0])}
+                    />
+                }
 
                 <form className="ml-2">
                     <input 

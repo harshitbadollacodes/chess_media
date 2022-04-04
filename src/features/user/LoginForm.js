@@ -21,8 +21,8 @@ export function LoginForm() {
     function guestCrendentialHandler(){
         setEmail("vish@gmail.com");
         setPassword("testing");
-    }
-
+    };
+    
     useEffect(() => {
         dispatch(resetAuthStatus());
         isUserLoggedIn && navigate("/");
@@ -93,9 +93,6 @@ export function LoginForm() {
                 </button>
 
             </form>
-
-            
-
         </div>
     );
 }

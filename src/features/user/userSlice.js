@@ -69,7 +69,8 @@ export const userSlice = createSlice({
         username,
         token,
         error: null,
-        allUsers: []
+        allUsers: [],
+        savedPosts: []
     },
 
     reducers: {

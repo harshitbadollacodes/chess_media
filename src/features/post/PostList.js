@@ -4,12 +4,17 @@ import { BsPencil, BsTrash } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { likeButtonClicked, loadPostsData, removePost, savePost } from "./postSlice";
+import { likeButtonClicked, loadPostsData, removePost } from "./postSlice";
 import { Username } from "../../components/Username";
 import { UserDisplayPicture } from "../../components/UserDisplayPicture";
+import { savePost } from "../profile/profileSlice";
 
 export function PostList({ posts }) {
+    
     const { userId, token } = useSelector(state => state.user);
+
+    const { savedPosts } = useSelector(state => state.profile);
+
     const { status } = useSelector(state => state.posts);
     
     const dispatch = useDispatch();
@@ -26,6 +31,9 @@ export function PostList({ posts }) {
         return <Loader/>
     };
 
+    let isSavedPost = (postId) => savedPosts.some(savedPost => savedPost._id === postId);
+
+
     const renderList = posts?.map(post => (
         <li
             className="border-2 p-2 my-2 flex rounded-xl bg-white" 
@@ -33,7 +41,7 @@ export function PostList({ posts }) {
         >
             
                 
-            <UserDisplayPicture displayPicture={post.user.displayPicture}/>
+            <UserDisplayPicture displayPicture={post.user.displayPicture} />
             
             <div 
                 key={post._id} 
@@ -74,7 +82,7 @@ export function PostList({ posts }) {
                 <p className="text-xl my-2 w-full "> {post.postContent} </p>
                 
                 {post.image && 
-                    <img src={post.image} className="w-[100%]" alt={post.postContent} />
+                    <img src={post.image} className="w-[100%] h-[29em]" alt={post.postContent} />
                 }
 
                 <div className="flex justify-between mt-4">
@@ -104,9 +112,10 @@ export function PostList({ posts }) {
                         onClick={() => dispatch(savePost({token, postId: post._id}))}
                     >
                         {   
-                            post.savedPosts.includes(userId) 
-                            ? <FaBookmark/>
-                            : <FaRegBookmark/>
+
+                                isSavedPost(post._id)
+                                ? <FaBookmark/>
+                                :<FaRegBookmark/>
                         }
                     </button>
                     

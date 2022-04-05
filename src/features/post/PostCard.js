@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { PostList } from "./PostList";
 import { addComment, removeComment } from "./postSlice";
 import { BsTrash } from "react-icons/bs";
+import { UserDisplayPicture } from "../../components/UserDisplayPicture";
 
 export const PostCard = () => {
     const { postId } = useParams();
@@ -63,17 +64,7 @@ export const PostCard = () => {
                         key={comment._id}
                         className="flex my-4"
                     >   
-                        <div 
-                            className="border-2 hover:border-l-blue transition-colors duration-300 rounded-full p-4 h-14 w-14 flex items-center justify-center"
-                        >
-                            <Link 
-                                to={`/profile/${comment.user._id}`} 
-                                className="font-bold text-xl"
-                            >
-                                {comment.user.firstName.split("")[0].toUpperCase()}
-                                {comment.user.lastName.split("")[0].toUpperCase()}
-                            </Link>
-                        </div>
+                        <UserDisplayPicture displayPicture={comment.user.displayPicture} />
 
                         <div className="w-full flex justify-between">
                             <div className="ml-4 flex flex-col">
@@ -102,10 +93,6 @@ export const PostCard = () => {
                 )
             }
             </ul>
-
-            
-
-
         </div>
     )
 }

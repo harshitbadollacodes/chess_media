@@ -13,9 +13,7 @@ export function ProfileDetails() {
     
     const { profileId } = useParams();
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, error, status } = useSelector(state => state.profile);
-
-    console.log(userDetails);
+    const { userDetails, error, profileStatus } = useSelector(state => state.profile);
 
     const followersList = userDetails?.followersList;
 
@@ -34,7 +32,7 @@ export function ProfileDetails() {
         dispatch(getPosts({token, profileId}));
     }, [profileId, dispatch, token]);
 
-    if (status === "loading") {
+    if (profileStatus === "loading") {
         return <Loader/>
     }
 

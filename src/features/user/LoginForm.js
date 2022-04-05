@@ -44,7 +44,7 @@ export function LoginForm() {
                 className="w-full md:w-[70%]"
                 onSubmit={(e) => loginHandler(e)}    
             >   
-                <div className="">
+                <div>
                     <label className="flex flex-col">
                         Email
                         <input 

@@ -7,19 +7,17 @@ import { getSavedPosts } from "./profileSlice";
 export const SavedPosts = () => {
 
     const { token } = useSelector(state => state.user);
-    const { status, savedPosts } = useSelector(state => state.profile);
-    console.log(status);
-    console.log(savedPosts);
+    const { profileStatus, savedPosts } = useSelector(state => state.profile);    
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (status === "idle") {
+        if (profileStatus === "idle") {
             dispatch(getSavedPosts({ token }));
         };
-    }, [dispatch, status, token]);
+    }, [dispatch, profileStatus, token]);
 
-    if (status === "loading") {
+    if (profileStatus === "loading") {
         return <Loader/>
     };
 

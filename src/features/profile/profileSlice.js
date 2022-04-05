@@ -99,7 +99,7 @@ export const getSavedPosts = createAsyncThunk(
 export const profileSlice = createSlice({
     name: "profile",
     initialState: {
-        status: "idle",
+        profileStatus: "idle",
         userDetails: {},
         followingUsers: [],
         savedPosts: [],
@@ -108,59 +108,66 @@ export const profileSlice = createSlice({
     reducers: {},
     extraReducers: {
         [getUserDetails.pending]: (state) => {
-            state.status = "loading"
+            state.profileStatus = "loading"
         },
         [getUserDetails.fulfilled]: (state, action) => {
-            state.status = "fulfilled";
+            state.profileStatus = "fulfilled";
             state.userDetails = action.payload.user;
         },
         [getUserDetails.rejected]: (state, action) => {
-            state.status = "error";
+            state.profileStatus = "error";
             state.error = action.error.message;
         },
 
+        [editBio.pending]: (state) => {
+            state.profileStatus = "loading"
+        },
+
         [editBio.fulfilled]: (state, action) => {
-            state.status = "bio updated";
+            state.profileStatus = "bio updated";
             const { userDetails } = action.payload;
             console.log(userDetails);
         },
 
         [followUser.pending]: (state) => {
-            state.status = "loading";
+            state.profileStatus = "load Spinner";
         },
         [followUser.fulfilled]: (state, action) => {
-            state.status = "fulfilled";
+            state.profileStatus = "fulfilled";
             state.userDetails.followersList = action.payload.followersList;
         },
         [followUser.rejected]: (state, action) => {
-            state.status = "rejected";
+            state.profileStatus = "rejected";
             state.error = action.error.message;
         },
 
+        [savePost.pending]: (state, action) => {
+            state.profileStatus = "load spinner";
+        },
         
         [savePost.fulfilled]: (state, action) => {
-            state.status = "fulfilled";
+            state.profileStatus = "fulfilled";
             let savedPost = action.payload.savedPost;
 
             state.savedPosts = savedPost.savedPosts
         },
         [savePost.rejected]: (state, action) => {
-            state.status = "error";
+            state.profileStatus = "error";
             state.error = action.payload;
         },
 
         [getSavedPosts.pending]: (state) => {
-            state.status = "loading";
+            state.profileStatus = "loading";
         },
 
         [getSavedPosts.fulfilled]: (state, action) => {
-            state.status = "savedPostsFetched";
+            state.profileStatus = "savedPostsFetched";
             console.log(action.payload);
             state.savedPosts = action.payload.savedPosts;
         },
 
         [getSavedPosts.rejected]: (state, action) => {
-            state.status = "error";
+            state.profileStatus = "error";
             state.error = action.payload;
         }
     }

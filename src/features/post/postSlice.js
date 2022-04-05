@@ -218,6 +218,10 @@ export const postSlice = createSlice({
             state.error = action.payload;
         },
 
+        [likeButtonClicked.pending]: (state) => {
+            state.status = "load spinner";
+        },
+
         [likeButtonClicked.fulfilled]: (state, action) => {
             let updatedPost = action.payload.post
             state.status = "fulfilled";

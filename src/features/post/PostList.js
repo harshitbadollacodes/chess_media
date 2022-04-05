@@ -8,15 +8,14 @@ import { likeButtonClicked, loadPostsData, removePost } from "./postSlice";
 import { Username } from "../../components/Username";
 import { UserDisplayPicture } from "../../components/UserDisplayPicture";
 import { savePost } from "../profile/profileSlice";
+import { Spinner } from "../../components/Spinner";
 
 export function PostList({ posts }) {
     
     const { userId, token } = useSelector(state => state.user);
-
-    const { savedPosts } = useSelector(state => state.profile);
-
+    const { savedPosts, profileStatus } = useSelector(state => state.profile);
     const { status } = useSelector(state => state.posts);
-    
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ export function PostList({ posts }) {
     };
 
     let isSavedPost = (postId) => savedPosts.some(savedPost => savedPost._id === postId);
-
 
     const renderList = posts?.map(post => (
         <li
@@ -90,11 +88,13 @@ export function PostList({ posts }) {
                         <button 
                             className="mt-2"
                             onClick={() => dispatch(likeButtonClicked({token, postId: post._id}))}
-                        >
+                        >   
                             {   
                                 post.likes.includes(userId) 
-                                ? <FaHeart className="mb-1 text-red-600"/>
-                                : <FaRegHeart className="mb-1 "/>
+                                ? status === "load spinner" 
+                                ? <Spinner/> : <FaHeart className="mb-1 text-red-600"/>    
+                                : status === "load spinner" 
+                                ? <Spinner/> : <FaRegHeart className="mb-1 "/>
                             }
                         </button>
                         
@@ -109,13 +109,14 @@ export function PostList({ posts }) {
                     </div>
 
                     <button 
-                        onClick={() => dispatch(savePost({token, postId: post._id}))}
+                        onClick={ () => dispatch(savePost({token, postId: post._id})) }
                     >
                         {   
-
-                                isSavedPost(post._id)
-                                ? <FaBookmark/>
-                                :<FaRegBookmark/>
+                            isSavedPost(post._id)
+                            ? profileStatus === "load spinner"
+                            ? <Spinner/> : <FaBookmark/>
+                            : profileStatus === "load spinner" 
+                            ? <Spinner/> : <FaRegBookmark/>
                         }
                     </button>
                     
@@ -124,11 +125,17 @@ export function PostList({ posts }) {
         </li>
     ));
 
-
     return (
         <div>
             <ul>
-                {renderList}
+                {
+                    posts.length > 0 
+                    ? renderList
+                    : <div className="w-full flex flex-col items-center justify-center mt-2 bg-white text-center min-h-[20vh] rounded-lg">    
+                        <p className="text-2xl">Looks all empty here. Create a new post? </p>
+                        <Link to="/post" className="btn my-4">Crete Post</Link>
+                    </div>
+                }
             </ul>
         </div>
     );

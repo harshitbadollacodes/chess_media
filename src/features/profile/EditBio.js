@@ -1,16 +1,15 @@
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ImgLoader } from "../../components/ImgLoader";
-import { Loader } from "../../components/Loader";
+import { Spinner } from "../../components/Spinner";
 import { editBio } from "./profileSlice";
 
 export function EditBio() {
 
     const { userId, token } = useSelector(state => state.user);
-    const { userDetails, status } = useSelector(state => state.profile);
+    const { userDetails, profileStatus } = useSelector(state => state.profile);
     
     const [inputBio, setInputBio] = useState(userDetails.bio);
     const [loader, setLoader] = useState(null);
@@ -53,10 +52,10 @@ export function EditBio() {
     };
 
     useEffect(() => {
-        if (status === "bio updated") {
+        if (profileStatus === "bio updated") {
             navigate(`/profile/${userId}`);
         }
-    }, [status, navigate, userId]);
+    }, [profileStatus, navigate, userId]);
 
     return (
         <div className="py-2 mr-2 mt-2 w-full lg:w-[60%]">
@@ -90,6 +89,7 @@ export function EditBio() {
                 className="btn mt-2"
                 onClick={() => editHandler()}
             >
+                { profileStatus === "loading" && <Spinner/> }
                 Save
             </button>
             <button 

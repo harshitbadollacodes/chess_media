@@ -9,7 +9,7 @@ export const getUserDetails = createAsyncThunk(
             const response = await axios.get(`${API}/user/profile/${userId}`);
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.log({error});
             return rejectWithValue(error.response.data.message);
         }
     }
@@ -30,7 +30,7 @@ export const editBio = createAsyncThunk(
     
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.log({error});
             return rejectWithValue(error.response.data.message);
         }
     }
@@ -48,7 +48,7 @@ export const followUser = createAsyncThunk(
             
             return response.data;
         } catch(error) {
-            console.log(error);
+            console.log({error});
             return rejectWithValue(error.response.data.message);
         }
     }
@@ -57,15 +57,12 @@ export const followUser = createAsyncThunk(
 export const savePost = createAsyncThunk(
     "user/savePost", 
     async ({token, postId}, {rejectWithValue}) => {
-        console.log(`${API}/user/bookmarkPost/${postId}`);
         try {
             const response = await axios.post(`${API}/user/savePost/${postId}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            console.log(response);
             
             return response.data;
         } catch(error) {
@@ -85,8 +82,6 @@ export const getSavedPosts = createAsyncThunk(
                     authorization: `Bearer ${token}`
                 }
             });
-
-            console.log("response", response);
 
             return response.data;
         } catch(error) {
@@ -126,7 +121,6 @@ export const profileSlice = createSlice({
         [editBio.fulfilled]: (state, action) => {
             state.profileStatus = "bio updated";
             const { userDetails } = action.payload;
-            console.log(userDetails);
         },
 
         [followUser.pending]: (state) => {
@@ -162,7 +156,6 @@ export const profileSlice = createSlice({
 
         [getSavedPosts.fulfilled]: (state, action) => {
             state.profileStatus = "savedPostsFetched";
-            console.log(action.payload);
             state.savedPosts = action.payload.savedPosts;
         },
 

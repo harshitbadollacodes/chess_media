@@ -58,28 +58,6 @@ export const likeButtonClicked = createAsyncThunk(
     
 });
 
-// export const savePost = createAsyncThunk(
-//     "posts/savePost", 
-//     async ({token, postId}, {rejectWithValue}) => {
-//         console.log(`${API}/user/bookmarkPost/${postId}`);
-//         try {
-//             const response = await axios.post(`${API}/user/bookmarkPost/${postId}`, {}, {
-//                 headers: {
-//                     Authorization: `Bearer ${token}`
-//                 }
-//             });
-
-//             console.log(response);
-            
-//             return response.data;
-//         } catch(error) {
-//             console.log({error});
-//             return rejectWithValue(error.response.data.message);
-//         }
-    
-//     }
-// );
-
 export const getPosts = createAsyncThunk(
     "posts/getPosts",
     async ({token, profileId}, {rejectWithValue}) => {
@@ -102,7 +80,6 @@ export const removePost = createAsyncThunk(
     "post/removePost",
     async ({token, postId}, {rejectWithValue}) => {
         try {
-            console.log(token, postId);
             const response = await axios.post(`${API}/posts/removePost/${postId}`, {}, {
                 headers: {
                     authorization: `Bearer ${token}`
@@ -129,7 +106,6 @@ export const editPost = createAsyncThunk(
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(response.data);
             return response.data;    
         } catch(error) {
             console.log({error});
@@ -141,7 +117,6 @@ export const editPost = createAsyncThunk(
 export const addComment = createAsyncThunk(
     "post/addComment",
     async ({token, inputComment, postId}, {rejectWithValue}) => {
-        console.log(inputComment, postId)
         try {
             const response = await axios.post(`${API}/posts/comment/${postId}`, {
                 inputComment
@@ -150,7 +125,6 @@ export const addComment = createAsyncThunk(
                     authorization: `Bearer ${token}`
                 }
             });
-            console.log(response.data);
             return response.data;
         } catch(error) {
             console.log({error});
@@ -171,7 +145,6 @@ export const removeComment = createAsyncThunk(
                     commentId
                 }
             });
-            console.log(response.data);
             return response.data;
         } catch(error) {
             console.log({error});
@@ -214,7 +187,6 @@ export const postSlice = createSlice({
         },
         [addPost.rejected]: (state, action) => {
             state.status = "error";
-            console.log(action.error);
             state.error = action.payload;
         },
 

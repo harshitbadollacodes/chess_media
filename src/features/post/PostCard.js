@@ -11,18 +11,15 @@ export const PostCard = () => {
     const { postId } = useParams();
     const { userId, token } = useSelector(state => state.user);
     const { posts } = useSelector(state => state.posts);
-    console.log(posts);
     
     const [inputComment, setInputComment] = useState("");
 
     const dispatch = useDispatch();
 
-
     const findPost = posts.find(post => post._id === postId);
     const post = [findPost];
 
     const comments = findPost.comments;
-    console.log(comments);
 
     function commentHandler(e) {
         e.preventDefault();

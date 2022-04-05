@@ -38,11 +38,11 @@ body {
 }
 
 .btn {
-  @apply bg-l-blue text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100
+  @apply bg-l-blue text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100 cursor-pointer
 }
 
 .btn-cancel {
-  @apply bg-red-500 text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100
+  @apply bg-red-500 text-black p-2 text-xl rounded-lg min-w-[100px] hover:bg-d-blue hover:text-white transition delay-100 cursor-pointer
 }
 
 .custom-file-input::-webkit-file-upload-button {
